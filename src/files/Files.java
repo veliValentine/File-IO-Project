@@ -9,11 +9,11 @@ public class Files {
     private String folderPath;
 
     public Files(String folderPath) {
-        this.folderPath = "../" + folderPath;
+        this.folderPath = folderPath;
     }
 
     public Files() {
-        folderPath = "../src/resources";
+        folderPath = "C:/Users/nicolas.valentine/Documents/Java/FileIOProject/src/resources";
     }
 
     public void listAllFileNames() {
@@ -25,8 +25,8 @@ public class Files {
             File folder = new File(folderPath);
             File[] files = folder.listFiles();
             for (File file : files) {
-                // extension equal to -1 => get all extensions. This way if extensions is empty
-                // string we don't end up printing everything
+                // extension equal to -1 => get all extensions
+                // This way if extension is empty string we don't end up printing everything
                 if (extension.equals("-1") || extension.equals(getFileExtension(file))) {
                     System.out.println("  " + getFileName(file));
                 }
@@ -37,7 +37,7 @@ public class Files {
         }
     }
 
-    public void listAllFileExtensions() {
+    public Set<String> listAllFileExtensions() {
         try {
             File folder = new File(folderPath);
             File[] files = folder.listFiles();
@@ -48,9 +48,11 @@ public class Files {
             for (String extension : extensions) {
                 System.out.println("  " + extension);
             }
+            return extensions;
         } catch (Exception e) {
             System.out.println("Failed to read files. " + e.getMessage());
             System.out.println("folderPath: " + folderPath);
+            return null;
         }
     }
 
