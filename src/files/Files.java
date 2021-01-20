@@ -1,4 +1,4 @@
-package main.java;
+package files;
 
 import java.io.File;
 import java.util.HashSet;
@@ -9,11 +9,11 @@ public class Files {
     private String folderPath;
 
     public Files(String folderPath) {
-        this.folderPath = folderPath;
+        this.folderPath = "../" + folderPath;
     }
 
     public Files() {
-        folderPath = "../resources";
+        folderPath = "../src/resources";
     }
 
     public void listAllFileNames() {
@@ -25,13 +25,15 @@ public class Files {
             File folder = new File(folderPath);
             File[] files = folder.listFiles();
             for (File file : files) {
-                // extension equal to -1 => get all extensions. This way if extensions is empty string we don't end up printing everything
+                // extension equal to -1 => get all extensions. This way if extensions is empty
+                // string we don't end up printing everything
                 if (extension.equals("-1") || extension.equals(getFileExtension(file))) {
                     System.out.println("  " + getFileName(file));
                 }
             }
         } catch (Exception e) {
             System.out.println("Failed to read files. " + e.getMessage());
+            System.out.println("folderPath: " + folderPath);
         }
     }
 
@@ -48,6 +50,7 @@ public class Files {
             }
         } catch (Exception e) {
             System.out.println("Failed to read files. " + e.getMessage());
+            System.out.println("folderPath: " + folderPath);
         }
     }
 
