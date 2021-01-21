@@ -20,7 +20,8 @@ public class Files {
         listAllFileNames("-1");
     }
 
-    public void listAllFileNames(String extension) {
+    public Set<String> listAllFileNames(String extension) {
+        Set<String> fileNames = new HashSet<>();
         try {
             File folder = new File(folderPath);
             File[] files = folder.listFiles();
@@ -28,13 +29,16 @@ public class Files {
                 // extension equal to -1 => get all extensions
                 // This way if extension is empty string we don't end up printing everything
                 if (extension.equals("-1") || extension.equals(getFileExtension(file))) {
-                    System.out.println("  " + getFileName(file));
+                    String fileName = getFileName(file);
+                    fileNames.add(getFileName(file));
+                    System.out.println("  " + fileName);
                 }
             }
         } catch (Exception e) {
             System.out.println("Failed to read files. " + e.getMessage());
             System.out.println("folderPath: " + folderPath);
         }
+        return fileNames;
     }
 
     public Set<String> listAllFileExtensions() {
