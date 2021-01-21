@@ -57,7 +57,14 @@ public class Files {
     }
 
     private String getFileName(File file) {
+        return getFileName(file, true);
+    }
+
+    private String getFileName(File file, boolean full) {
         String fileName = file.getName();
+        if (full) {
+            return fileName;
+        }
         String trimmedFileName = fileName.substring(0, fileName.lastIndexOf("."));
         return trimmedFileName;
     }
