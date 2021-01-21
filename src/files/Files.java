@@ -1,7 +1,11 @@
 package files;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashSet;
+import java.util.Scanner;
 import java.util.Set;
 
 public class Files {
@@ -16,17 +20,21 @@ public class Files {
         folderPath = "C:/Users/nicolas.valentine/Documents/Java/FileIOProject/src/resources";
     }
 
-    public void listAllFileNames() {
-        listAllFileNames("-1");
+    public Set<String> listAllUniqueFileNames() {
+        return listAllUniqueFileNames("-1");
+    }
+
+    public void printAllFileNames() {
+        printAllFileNames("-1");
     }
 
     public void printAllFileNames(String extension) {
-        for (String fileName : listAllFileNames(extension)) {
+        for (String fileName : listAllUniqueFileNames(extension)) {
             System.out.println("  " + fileName);
         }
     }
 
-    public Set<String> listAllFileNames(String extension) {
+    public Set<String> listAllUniqueFileNames(String extension) {
         Set<String> fileNames = new HashSet<>();
         try {
             File folder = new File(folderPath);
@@ -62,6 +70,69 @@ public class Files {
             System.out.println("folderPath: " + folderPath);
             return null;
         }
+    }
+
+    public Long size(String fileName) {
+        try {
+            File file = new File(folderPath + "/" + fileName);
+            return file.length();
+        } catch (Exception e) {
+            System.out.println("Failed to read a file");
+            System.out.println("Path: " + folderPath + "/" + fileName);
+        }
+        return -1L;
+    }
+
+    public Long amountOfLines(String fileName) {
+        long lines = 0;
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(folderPath + "/" + fileName))) {
+            while (bufferedReader.readLine() != null) {
+                lines++;
+            }
+        } catch (IOException e) {
+            System.out.println("IOexection " + e.getMessage());
+            System.out.println("Path: " + folderPath + "/" + fileName);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return lines;
+    }
+
+    public boolean containsWord(String word, String fileName) {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(folderPath + "/" + fileName))) {
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                if (line.toLowerCase().contains(word.toLowerCase())) {
+                    return true;
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("IOexection " + e.getMessage());
+            System.out.println("Path: " + folderPath + "/" + fileName);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
+
+    public long countWord(String word, String fileName) {
+        long count = 0;
+        try (Scanner scanner = new Scanner(new File(folderPath + "/" + fileName))) {
+            scanner.useDelimiter("[^a-zA-Z0-0]+");
+            String fileWord;
+            while (scanner.hasNext()) {
+                fileWord = scanner.next().toLowerCase().trim();
+                if (word.toLowerCase().equals(fileWord)) {
+                    count++;
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("IOexection " + e.getMessage());
+            System.out.println("Path: " + folderPath + "/" + fileName);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return count;
     }
 
     private String getFileName(File file) {
