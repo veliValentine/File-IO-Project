@@ -20,6 +20,12 @@ public class Files {
         listAllFileNames("-1");
     }
 
+    public void printAllFileNames(String extension) {
+        for (String fileName : listAllFileNames(extension)) {
+            System.out.println("  " + fileName);
+        }
+    }
+
     public Set<String> listAllFileNames(String extension) {
         Set<String> fileNames = new HashSet<>();
         try {
@@ -29,9 +35,7 @@ public class Files {
                 // extension equal to -1 => get all extensions
                 // This way if extension is empty string we don't end up printing everything
                 if (extension.equals("-1") || extension.equals(getFileExtension(file))) {
-                    String fileName = getFileName(file);
                     fileNames.add(getFileName(file));
-                    System.out.println("  " + fileName);
                 }
             }
         } catch (Exception e) {
