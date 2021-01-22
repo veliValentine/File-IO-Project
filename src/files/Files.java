@@ -158,6 +158,10 @@ public class Files {
         return count;
     }
 
+    private String getFileName(File file) {
+        return getFileName(file, true);
+    }
+
     private String getFileName(File file, boolean full) {
         String fileName = file.getName();
         if (full) {
