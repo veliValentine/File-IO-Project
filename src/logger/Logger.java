@@ -38,6 +38,11 @@ public class Logger {
         return false;
     }
 
+    public boolean error(String text){
+        String errorText = getCurrentTimeStamp() + ": -- ERROR -- " + text + ".";
+        return write(errorText);
+    }
+
     public boolean log(String text, long timeMS) {
         String textTolog = getCurrentTimeStamp() + ": " + text + " The function took " + timeMS + "ms to execute.";
         return write(textTolog);

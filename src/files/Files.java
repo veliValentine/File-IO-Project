@@ -51,8 +51,7 @@ public class Files {
                 }
             }
         } catch (Exception e) {
-            System.out.println("Failed to read files. " + e.getMessage());
-            System.out.println("folderPath: " + folderPath);
+            logger.error("Failed to read files " + e.getMessage() + "\n" + "  path:" + folderPath);
         }
         return fileNames;
     }
@@ -70,8 +69,7 @@ public class Files {
             }
             return extensions;
         } catch (Exception e) {
-            System.out.println("Failed to read files. " + e.getMessage());
-            System.out.println("folderPath: " + folderPath);
+            logger.error("Failed to read files " + e.getMessage() + "\n" + "  path:" + folderPath);
             return null;
         }
     }
@@ -87,8 +85,7 @@ public class Files {
             File file = new File(folderPath + "/" + fileName);
             fileSize = file.length();
         } catch (Exception e) {
-            System.out.println("Failed to read a file");
-            System.out.println("Path: " + folderPath + "/" + fileName);
+            logger.error("Failed to read files " + e.getMessage() + "\n" + "  path:" + folderPath + "\\" + fileName);
         }
         long totalTime = System.currentTimeMillis() - time;
         String text = fileName + " has size of " + fileSize + " bytes or " + (fileSize / 1024.0) + " kilobytes.";
@@ -108,10 +105,9 @@ public class Files {
                 lines++;
             }
         } catch (IOException e) {
-            System.out.println("IOexection " + e.getMessage());
-            System.out.println("Path: " + folderPath + "/" + fileName);
+            logger.error("IOException " + e.getMessage() + "\n" + "  path:" + folderPath + "\\" + fileName);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.error("Failed to read files " + e.getMessage() + "\n" + "  path:" + folderPath + "\\" + fileName);
         }
 
         String text = fileName + " contains " + lines + " lines.";
@@ -137,10 +133,9 @@ public class Files {
                 }
             }
         } catch (IOException e) {
-            System.out.println("IOexection " + e.getMessage());
-            System.out.println("Path: " + folderPath + "/" + fileName);
+            logger.error("IOException " + e.getMessage() + "\n" + "  path:" + folderPath + "\\" + fileName);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.error("Failed to read files " + e.getMessage() + "\n" + "  path:" + folderPath + "\\" + fileName);
         }
 
         String text = fileName + " contains word " + word + ": " + contains + ".";
@@ -167,10 +162,9 @@ public class Files {
                 }
             }
         } catch (IOException e) {
-            System.out.println("IOexection " + e.getMessage());
-            System.out.println("Path: " + folderPath + "/" + fileName);
+            logger.error("IOException " + e.getMessage() + "\n" + "  path:" + folderPath + "\\" + fileName);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.error("Failed to read files " + e.getMessage() + "\n" + "  path:" + folderPath + "\\" + fileName);
         }
 
         String text = "The word " + word + " was " + count + " times in the file " + fileName + ".";
