@@ -43,6 +43,11 @@ public class Logger {
         return write(textTolog);
     }
 
+    public boolean logAndPrint(String text, long timeMS) {
+        System.out.println(text);
+        return log(text, timeMS);
+    }
+
     private String getCurrentTimeStamp() {
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_MONTH);
