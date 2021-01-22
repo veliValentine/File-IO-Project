@@ -2,3 +2,20 @@
 22-1-2021T16:02:00: Dracula.txt contains word mem: true. The function took 6ms to execute.
 22-1-2021T16:02:07: The word mem was 6 times in the file Dracula.txt. The function took 178ms to execute.
 22-1-2021T16:05:25: Dracula.txt has size of 883160 bytes or 862 kilobytes. The function took 15ms to execute.
+22-1-2021T16:47:52: Dracula.txt has size of 883160 bytes or ~862 kilobytes. The function took 23ms to execute.
+22-1-2021T16:47:55: Dracula.txt contains 15973 lines. The function took 37ms to execute.
+22-1-2021T16:48:01: Dracula.txt contains word lol: true. The function took 0ms to execute.
+22-1-2021T16:48:09: The word lol was 0 times in the file Dracula.txt. The function took 186ms to execute.
+22-1-2021T16:48:21: Dracula.txt contains word lol: true. The function took 0ms to execute.
+22-1-2021T16:53:14: Dracula.txt contains word lol: false. The function took 132ms to execute.
+22-1-2021T16:53:24: Dracula.txt contains word meh: false. The function took 53ms to execute.
+22-1-2021T16:53:33: Dracula.txt contains word __meh: false. The function took 47ms to execute.
+22-1-2021T16:53:44: The word meh was 0 times in the file Dracula.txt. The function took 185ms to execute.
+22-1-2021T16:53:59: The word __meh was 0 times in the file Dracula.txt. The function took 147ms to execute.
+22-1-2021T16:54:05: The word _meh was 0 times in the file Dracula.txt. The function took 115ms to execute.
+22-1-2021T16:54:13: Dracula.txt contains word _meh: false. The function took 55ms to execute.
+22-1-2021T16:54:45: Dracula.txt contains word asleep: true. The function took 0ms to execute.
+22-1-2021T16:54:51: The word asleep was 47 times in the file Dracula.txt. The function took 133ms to execute.
+22-1-2021T16:55:04: Dracula.txt contains word mem: true. The function took 0ms to execute.
+22-1-2021T16:55:09: The word mem was 6 times in the file Dracula.txt. The function took 116ms to execute.
+22-1-2021T16:56:24: Dracula.txt contains word lol: false. The function took 131ms to execute.

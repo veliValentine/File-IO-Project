@@ -65,8 +65,11 @@ public class Files {
         Set<String> extensions = new HashSet<>();
         for (File file : files) {
             String extension = getFileExtension(file);
-            extensions.add(extension);
-            System.out.println(extension);
+            if (extensions.add(extension)) {
+                // print only unique extensions
+                System.out.println(extension);
+            }
+            ;
         }
         return extensions;
     }
@@ -113,9 +116,15 @@ public class Files {
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(folderPath + "/" + fileName))) {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
-                if (line.toLowerCase().contains(word.toLowerCase())) {
-                    // if the word is found, exit loop and return result
-                    contains = true;
+                for (String wordInLine : line.toLowerCase().split("[^a-zA-Z0-9]")) {
+                    if (wordInLine.equals(word)) {
+                        contains = true;
+                        // break for-loop
+                        break;
+                    }
+                }
+                if (contains) {
+                    // if the word is found, exit while-loop and return result
                     break;
                 }
             }
