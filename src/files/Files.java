@@ -8,16 +8,20 @@ import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 
+import logger.Logger;
+
 public class Files {
 
     private String folderPath;
+    private Logger logger;
 
     public Files(String folderPath) {
         this.folderPath = folderPath;
+        logger = new Logger(folderPath);
     }
 
     public Files() {
-        folderPath = "C:/Users/nicolas.valentine/Documents/Java/FileIOProject/src/resources";
+        this("C:/Users/nicolas.valentine/Documents/Java/FileIOProject/src/resources");
     }
 
     public Set<String> listAllUniqueFileNames() {
@@ -116,6 +120,11 @@ public class Files {
     }
 
     public long countWord(String word, String fileName) {
+        return countWord(word, fileName, false);
+    }
+
+    public long countWord(String word, String fileName, boolean print) {
+        long time = System.currentTimeMillis();
         long count = 0;
         try (Scanner scanner = new Scanner(new File(folderPath + "/" + fileName))) {
             scanner.useDelimiter("[^a-zA-Z0-0]+");
@@ -132,6 +141,15 @@ public class Files {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+
+        String text = "The word " + word + " was " + count + " times in the file " + fileName + ".";
+        long totaltime = System.currentTimeMillis() - time;
+        if (print) {
+            logger.logAndPrint(text, totaltime);
+        } else {
+            logger.log(text, totaltime);
+        }
+
         return count;
     }
 
