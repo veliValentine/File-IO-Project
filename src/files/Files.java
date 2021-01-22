@@ -14,10 +14,21 @@ public class Files {
 
     private String folderPath;
     private Logger logger;
+    private File[] files;
 
     public Files(String folderPath) {
         this.folderPath = folderPath;
         logger = new Logger(folderPath);
+        try {
+            File folder = new File(folderPath);
+            if (folder.isDirectory()) {
+                files = folder.listFiles();
+            } else {
+                logger.error("Path is not a folder. Path:" + folderPath);
+            }
+        } catch (Exception e) {
+            logger.error("Failed to read files " + e.getMessage() + "\n" + "  path:" + folderPath);
+        }
     }
 
     public Files() {
@@ -40,59 +51,45 @@ public class Files {
 
     public Set<String> listAllUniqueFileNames(String extension) {
         Set<String> fileNames = new HashSet<>();
-        try {
-            File folder = new File(folderPath);
-            File[] files = folder.listFiles();
-            for (File file : files) {
-                // extension equal to -1 => get all extensions
-                // This way if extension is empty string we don't end up printing everything
-                if (extension.equals("-1") || extension.equals(getFileExtension(file))) {
-                    fileNames.add(getFileName(file));
-                }
+        for (File file : files) {
+            // extension equal to -1 => get all extensions
+            // This way if extension is empty string we don't end up printing everything
+            if (extension.equals("-1") || extension.equals(getFileExtension(file))) {
+                fileNames.add(getFileName(file));
             }
-        } catch (Exception e) {
-            logger.error("Failed to read files " + e.getMessage() + "\n" + "  path:" + folderPath);
         }
         return fileNames;
     }
 
     public Set<String> listAllFileExtensions() {
-        try {
-            File folder = new File(folderPath);
-            File[] files = folder.listFiles();
-            Set<String> extensions = new HashSet<>();
-            for (File file : files) {
-                extensions.add(getFileExtension(file));
-            }
-            for (String extension : extensions) {
-                System.out.println("  " + extension);
-            }
-            return extensions;
-        } catch (Exception e) {
-            logger.error("Failed to read files " + e.getMessage() + "\n" + "  path:" + folderPath);
-            return null;
+        Set<String> extensions = new HashSet<>();
+        for (File file : files) {
+            String extension = getFileExtension(file);
+            extensions.add(extension);
+            System.out.println(extension);
         }
+        return extensions;
     }
 
     public Long size(String fileName) {
         long time = System.currentTimeMillis();
-        long fileSize = -1;
-        try {
-            File file = new File(folderPath + "/" + fileName);
-            fileSize = file.length();
-        } catch (Exception e) {
-            logger.error("Failed to read files " + e.getMessage() + "\n" + "  path:" + folderPath + "\\" + fileName);
-        }
+
+        File file = getFile(fileName);
+        long fileSize = file.length();
+
+        // logger inputs
         long totalTime = System.currentTimeMillis() - time;
-        String text = fileName + " has size of " + fileSize + " bytes or " + (fileSize / 1024.0) + " kilobytes.";
+        String text = fileName + " has size of " + fileSize + " bytes or ~" + (Math.round(fileSize / 1024.0))
+                + " kilobytes.";
         logger.logAndPrint(text, totalTime);
-        return -1L;
+        return fileSize;
     }
 
     public Long amountOfLines(String fileName) {
         long time = System.currentTimeMillis();
         long lines = 0;
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(folderPath + "/" + fileName))) {
+            // read file line by line
             while (bufferedReader.readLine() != null) {
                 lines++;
             }
@@ -102,6 +99,7 @@ public class Files {
             logger.error("Failed to read files " + e.getMessage() + "\n" + "  path:" + folderPath + "\\" + fileName);
         }
 
+        // logger inputs
         String text = fileName + " contains " + lines + " lines.";
         long totalTime = System.currentTimeMillis() - time;
         logger.logAndPrint(text, totalTime);
@@ -116,6 +114,7 @@ public class Files {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 if (line.toLowerCase().contains(word.toLowerCase())) {
+                    // if the word is found, exit loop and return result
                     contains = true;
                     break;
                 }
@@ -126,6 +125,7 @@ public class Files {
             logger.error("Failed to read files " + e.getMessage() + "\n" + "  path:" + folderPath + "\\" + fileName);
         }
 
+        // logger inputs
         String text = fileName + " contains word " + word + ": " + contains + ".";
         long totalTime = System.currentTimeMillis() - time;
         logger.logAndPrint(text, totalTime);
@@ -136,7 +136,8 @@ public class Files {
     public long countWord(String word, String fileName) {
         long time = System.currentTimeMillis();
         long count = 0;
-        try (Scanner scanner = new Scanner(new File(folderPath + "/" + fileName))) {
+        try (Scanner scanner = new Scanner(getFile(fileName))) {
+            // divide file into small string pieces that contain only letters or numbers
             scanner.useDelimiter("[^a-zA-Z0-0]+");
             String fileWord;
             while (scanner.hasNext()) {
@@ -151,11 +152,25 @@ public class Files {
             logger.error("Failed to read files " + e.getMessage() + "\n" + "  path:" + folderPath + "\\" + fileName);
         }
 
+        // logger inputs
         String text = "The word " + word + " was " + count + " times in the file " + fileName + ".";
         long totalTime = System.currentTimeMillis() - time;
         logger.logAndPrint(text, totalTime);
 
         return count;
+    }
+
+    private File getFile(String fileName) {
+        // reads file from the folder
+        try {
+            File file = new File(folderPath + "/" + fileName);
+            if (file.isFile()) {
+                return file;
+            }
+        } catch (Exception e) {
+            logger.error("Failed to read files " + e.getMessage() + "\n" + "  path:" + folderPath + "\\" + fileName);
+        }
+        return null;
     }
 
     private String getFileName(File file) {
@@ -167,14 +182,15 @@ public class Files {
         if (full) {
             return fileName;
         }
+        // trim the extension out of the file name
         String trimmedFileName = fileName.substring(0, fileName.lastIndexOf("."));
         return trimmedFileName;
     }
 
     private String getFileExtension(File file) {
         String fileName = file.getName();
-        String trimmedFileName = fileName.substring(1 + fileName.lastIndexOf("."));
-        return trimmedFileName;
+        String extension = fileName.substring(1 + fileName.lastIndexOf("."));
+        return extension;
     }
 
     public void setFolderPath(String path) {

@@ -15,8 +15,8 @@ public class Logger {
     public Logger(String folderPath) {
         try {
             file = new File(folderPath + "\\logger.txt");
+            // creates logger.txt file if not already in folder
             file.createNewFile();
-
         } catch (IOException e) {
             System.out.println("IOerror " + e.getMessage());
         } catch (Exception e) {
@@ -27,6 +27,7 @@ public class Logger {
     public boolean write(String text) {
         try {
             FileWriter fw = new FileWriter(file, true);
+            // Writes to logger.txt file. Adds line change to end
             fw.write(text + "\n");
             fw.close();
             return true;
@@ -38,17 +39,24 @@ public class Logger {
         return false;
     }
 
-    public boolean error(String text){
+    // method to log errors
+    public boolean error(String text) {
         String errorText = getCurrentTimeStamp() + ": -- ERROR -- " + text + ".";
         return write(errorText);
     }
 
+    // method to log to logger.txt
     public boolean log(String text, long timeMS, boolean print) {
         String textTolog = getCurrentTimeStamp() + ": " + text + " The function took " + timeMS + "ms to execute.";
-        if(print){
+        // log can be printed if necessary
+        if (print) {
             System.out.println(textTolog);
         }
         return write(textTolog);
+    }
+
+    public boolean log(String text, long timeMS) {
+        return log(text, timeMS, false);
     }
 
     public boolean logAndPrint(String text, long timeMS) {
@@ -58,8 +66,7 @@ public class Logger {
     private String getCurrentTimeStamp() {
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_MONTH);
-        // +1 in month because calendar.month starts from 0
-        int month = calendar.get(Calendar.MONTH) + 1;
+        int month = calendar.get(Calendar.MONTH) + 1; // +1 in month because calendar.month starts from 0
         int year = calendar.get(Calendar.YEAR);
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
@@ -68,10 +75,17 @@ public class Logger {
                 + doubleDigits(second);
     }
 
+    // returns numbers as double digit string
     private String doubleDigits(int number) {
         if (Math.abs(number) < 10) {
+            if (number < 0) {
+                // numbers from -9...-1
+                return "-0" + Math.abs(number);
+            }
+            //numbers from 0...9
             return "0" + number;
         }
+        // these numbers are already double digit
         return "" + number;
     }
 }

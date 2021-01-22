@@ -1,0 +1,4 @@
+22-1-2021T16:01:50: Dracula.txt contains 15973 lines. The function took 26ms to execute.
+22-1-2021T16:02:00: Dracula.txt contains word mem: true. The function took 6ms to execute.
+22-1-2021T16:02:07: The word mem was 6 times in the file Dracula.txt. The function took 178ms to execute.
+22-1-2021T16:05:25: Dracula.txt has size of 883160 bytes or 862 kilobytes. The function took 15ms to execute.
