@@ -48,10 +48,10 @@ public class Program {
                             System.out.println("  " + fileName);
 
                         } else if (action == 2) {
-                            files.size(fileName, true);
+                            files.size(fileName);
 
                         } else if (action == 3) {
-                            files.amountOfLines(fileName, true);
+                            files.amountOfLines(fileName);
 
                         } else if (action == 4) {
                             String word = interact.input("Enter word: ");
@@ -60,7 +60,7 @@ public class Program {
                         } else if (action == 5) {
                             String word = interact.input("Enter word: ");
                             System.out.println();
-                            files.countWord(word, fileName, true);
+                            files.countWord(word, fileName);
                         }
                         interact.input("Press enter to continue");
                     }

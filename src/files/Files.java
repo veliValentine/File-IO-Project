@@ -75,10 +75,6 @@ public class Files {
     }
 
     public Long size(String fileName) {
-        return size(fileName, false);
-    }
-
-    public Long size(String fileName, boolean print) {
         long time = System.currentTimeMillis();
         long fileSize = -1;
         try {
@@ -94,10 +90,6 @@ public class Files {
     }
 
     public Long amountOfLines(String fileName) {
-        return amountOfLines(fileName, false);
-    }
-
-    public Long amountOfLines(String fileName, boolean print) {
         long time = System.currentTimeMillis();
         long lines = 0;
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(folderPath + "/" + fileName))) {
@@ -118,10 +110,6 @@ public class Files {
     }
 
     public boolean containsWord(String word, String fileName) {
-        return containsWord(word, fileName, false);
-    }
-
-    public boolean containsWord(String word, String fileName, boolean print) {
         long time = System.currentTimeMillis();
         boolean contains = false;
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(folderPath + "/" + fileName))) {
@@ -146,10 +134,6 @@ public class Files {
     }
 
     public long countWord(String word, String fileName) {
-        return countWord(word, fileName, false);
-    }
-
-    public long countWord(String word, String fileName, boolean print) {
         long time = System.currentTimeMillis();
         long count = 0;
         try (Scanner scanner = new Scanner(new File(folderPath + "/" + fileName))) {
@@ -172,10 +156,6 @@ public class Files {
         logger.logAndPrint(text, totalTime);
 
         return count;
-    }
-
-    private String getFileName(File file) {
-        return getFileName(file, true);
     }
 
     private String getFileName(File file, boolean full) {
