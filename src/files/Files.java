@@ -103,11 +103,18 @@ public class Files {
     }
 
     public boolean containsWord(String word, String fileName) {
+        return containsWord(word, fileName, false);
+    }
+
+    public boolean containsWord(String word, String fileName, boolean print) {
+        long time = System.currentTimeMillis();
+        boolean contains = false;
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(folderPath + "/" + fileName))) {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 if (line.toLowerCase().contains(word.toLowerCase())) {
-                    return true;
+                    contains = true;
+                    break;
                 }
             }
         } catch (IOException e) {
@@ -116,7 +123,16 @@ public class Files {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return false;
+
+        String text = fileName + " contains word " + word + ": " + contains;
+        long totalTime = System.currentTimeMillis() - time;
+        if (print) {
+            logger.logAndPrint(text, totalTime);
+        } else {
+            logger.log(text, totalTime);
+        }
+
+        return contains;
     }
 
     public long countWord(String word, String fileName) {
