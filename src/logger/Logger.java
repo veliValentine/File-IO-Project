@@ -9,8 +9,12 @@ public class Logger {
     private File file;
 
     public Logger() {
+        this("C:\\Users\\nicolas.valentine\\Documents\\Java\\FileIOProject\\src\\resources");
+    }
+
+    public Logger(String folderPath) {
         try {
-            file = new File("C:\\Users\\nicolas.valentine\\Documents\\Java\\FileIOProject\\src\\resources\\logger.txt");
+            file = new File(folderPath + "\\logger.txt");
             file.createNewFile();
 
         } catch (IOException e) {
