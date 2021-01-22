@@ -89,7 +89,7 @@ public class Files {
         }
         long totalTime = System.currentTimeMillis() - time;
         String text = fileName + " has size of " + fileSize + " bytes or " + (fileSize / 1024.0) + " kilobytes.";
-        logOrLogAndPrint(text, totalTime, print);
+        logger.logAndPrint(text, totalTime);
         return -1L;
     }
 
@@ -112,7 +112,7 @@ public class Files {
 
         String text = fileName + " contains " + lines + " lines.";
         long totalTime = System.currentTimeMillis() - time;
-        logOrLogAndPrint(text, totalTime, print);
+        logger.logAndPrint(text, totalTime);
 
         return lines;
     }
@@ -140,7 +140,7 @@ public class Files {
 
         String text = fileName + " contains word " + word + ": " + contains + ".";
         long totalTime = System.currentTimeMillis() - time;
-        logOrLogAndPrint(text, totalTime, print);
+        logger.logAndPrint(text, totalTime);
 
         return contains;
     }
@@ -169,17 +169,9 @@ public class Files {
 
         String text = "The word " + word + " was " + count + " times in the file " + fileName + ".";
         long totalTime = System.currentTimeMillis() - time;
-        logOrLogAndPrint(text, totalTime, print);
+        logger.logAndPrint(text, totalTime);
 
         return count;
-    }
-
-    private void logOrLogAndPrint(String text, long totalTime, boolean print) {
-        if (print) {
-            logger.logAndPrint(text, totalTime);
-        } else {
-            logger.log(text, totalTime);
-        }
     }
 
     private String getFileName(File file) {

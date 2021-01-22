@@ -56,12 +56,7 @@ public class Program {
                         } else if (action == 4) {
                             String word = interact.input("Enter word: ");
                             System.out.println();
-                            if (files.containsWord(word, fileName)) {
-                                System.out.println("  File contains the word: " + word + "!");
-                            } else {
-                                System.out.println("  File doesn't contain the word: " + word);
-                            }
-
+                            files.containsWord(word, fileName);
                         } else if (action == 5) {
                             String word = interact.input("Enter word: ");
                             System.out.println();

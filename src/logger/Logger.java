@@ -43,14 +43,16 @@ public class Logger {
         return write(errorText);
     }
 
-    public boolean log(String text, long timeMS) {
+    public boolean log(String text, long timeMS, boolean print) {
         String textTolog = getCurrentTimeStamp() + ": " + text + " The function took " + timeMS + "ms to execute.";
+        if(print){
+            System.out.println(textTolog);
+        }
         return write(textTolog);
     }
 
     public boolean logAndPrint(String text, long timeMS) {
-        System.out.println(text);
-        return log(text, timeMS);
+        return log(text, timeMS, true);
     }
 
     private String getCurrentTimeStamp() {
