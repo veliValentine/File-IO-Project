@@ -2,6 +2,8 @@ import java.util.Set;
 
 import files.Files;
 import interactions.UserInteractions;
+// javac -d ../out ../src/*.java ../src/files/*.java ../src/interactions/*.java
+
 
 public class Program {
     public static void main(String[] args) {
@@ -33,7 +35,8 @@ public class Program {
                 Set<String> allTextFiles = files.listAllUniqueFileNames("txt");
                 String fileName = interact.inputFile(allTextFiles);
                 System.out.println();
-                if (!fileName.equals("")) { // else continue main-loop
+                if (!fileName.equals("")) { //or else continue the main-loop
+                    // File manipulation loop
                     while (true) {
                         printFileManipulationActions();
                         int action = interact.inputInt();
