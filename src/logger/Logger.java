@@ -39,7 +39,7 @@ public class Logger {
     }
 
     public boolean log(String text, long timeMS) {
-        String textTolog = getCurrentTimeStamp() + ": " + text + " The function took " + timeMS + "ms to execute";
+        String textTolog = getCurrentTimeStamp() + ": " + text + " The function took " + timeMS + "ms to execute.";
         return write(textTolog);
     }
 

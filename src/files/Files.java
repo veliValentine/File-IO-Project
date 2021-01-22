@@ -114,7 +114,7 @@ public class Files {
             System.out.println(e.getMessage());
         }
 
-        String text = fileName + " contains " + lines + " lines";
+        String text = fileName + " contains " + lines + " lines.";
         long totalTime = System.currentTimeMillis() - time;
         logOrLogAndPrint(text, totalTime, print);
 
@@ -143,7 +143,7 @@ public class Files {
             System.out.println(e.getMessage());
         }
 
-        String text = fileName + " contains word " + word + ": " + contains;
+        String text = fileName + " contains word " + word + ": " + contains + ".";
         long totalTime = System.currentTimeMillis() - time;
         logOrLogAndPrint(text, totalTime, print);
 
