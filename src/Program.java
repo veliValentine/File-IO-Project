@@ -1,80 +1,71 @@
+
 import java.util.Set;
 
 import files.Files;
 import interactions.UserInteractions;
-// javac -d ../out ../src/*.java ../src/files/*.java ../src/interactions/*.java
 
-
+// javac -d ../out ../src/*.java ../src/files/*.java ../src/interactions/*.java ../src/logger/*.java
 public class Program {
     public static void main(String[] args) {
         Files files = new Files();
         UserInteractions interact = new UserInteractions();
 
-        System.out.println("-------------------");
-        System.out.println("Welcome to the File IO");
+        printGreetings();
         while (true) {
-            System.out.println("-------------------");
+            // print main actions and ask what to do
             printMainLoopActions();
             int userInput = interact.inputInt();
-            System.out.println();
-            if (userInput == 0) {
+
+            if (userInput == 0) { // Quit main loop
                 break;
-            } else if (userInput == 1) {
+            } else if (userInput == 1) { // print all file names in resource folder
                 System.out.println("All files");
                 files.printAllFileNames();
 
-            } else if (userInput == 2) {
+            } else if (userInput == 2) { // choose extension and print these file names
                 System.out.println("Extensions");
                 Set<String> allExtensions = files.listAllFileExtensions();
                 System.out.println();
                 String extension = interact.inputExtension(allExtensions);
-                System.out.println();
                 files.printAllFileNames(extension);
 
-            } else if (userInput == 3) {
+            } else if (userInput == 3) { // perform operations to specific file
                 Set<String> allTextFiles = files.listAllUniqueFileNames("txt");
+                // interct.inputFile requires a set of filenames to compare if the file exsists
                 String fileName = interact.inputFile(allTextFiles);
-                System.out.println();
-                if (!fileName.equals("")) { //or else continue the main-loop
-                    // File manipulation loop
+                if (!fileName.equals("")) { // or else continue the main-loop
+                    // File operation loop
                     while (true) {
+                        // print possible actions and ask user what to do for the selected .txt file
                         printFileManipulationActions();
                         int action = interact.inputInt();
-                        System.out.println();
-                        if (action == 0) {
+
+                        if (action == 0) {// exit file operations loop
                             break;
 
-                        } else if (action == 1) {
+                        } else if (action == 1) { // print file name
                             System.out.println("  " + fileName);
 
-                        } else if (action == 2) {
-                            long size = files.size(fileName);
-                            System.out.println("  " + size + " bytes or " + (size / 1024.0) + " kilobytes");
+                        } else if (action == 2) { // prints file size
+                            files.size(fileName);
 
-                        } else if (action == 3) {
-                            long lines = files.amountOfLines(fileName);
-                            System.out.println("  " + lines + " lines");
+                        } else if (action == 3) { // amount of lines
+                            files.amountOfLines(fileName);
 
-                        } else if (action == 4) {
+                        } else if (action == 4) { // asks for a word and sees if that specific word is in the file
                             String word = interact.input("Enter word: ");
-                            System.out.println();
-                            if (files.containsWord(word, fileName)) {
-                                System.out.println("  File contains the word: " + word + "!");
-                            } else {
-                                System.out.println("  File doesn't contain the word: " + word);
-                            }
+                            files.containsWord(word, fileName);
 
-                        } else if (action == 5) {
+                        } else if (action == 5) { // asks for a word and sees how many times that word is in the file
                             String word = interact.input("Enter word: ");
-                            System.out.println();
-                            long count = files.countWord(word, fileName);
-                            System.out.println("The word " + word + " was " + count + " times in the file " + fileName);
+                            files.countWord(word, fileName);
                         }
+                        // to give user some time to read the result before adding the menu printout
                         interact.input("Press enter to continue");
                     }
                 }
             }
-
+            // to give user some time to read the result before adding the menu printout
             interact.input("Press enter to continue");
         }
         interact.close();
@@ -82,10 +73,11 @@ public class Program {
     }
 
     private static void printMainLoopActions() {
+        System.out.println("-------------------");
         System.out.println("Codes for actions");
         System.out.println("  1: List all files");
         System.out.println("  2: Get files by extension");
-        System.out.println("  3: Manipulate .txt file");
+        System.out.println("  3: Operate a .txt file");
         System.out.println("  0: exit");
     }
 
@@ -99,4 +91,8 @@ public class Program {
         System.out.println("  0: Exit");
     }
 
+    private static void printGreetings() {
+        System.out.println("-------------------");
+        System.out.println("Welcome to the File IO");
+    }
 }
