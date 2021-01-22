@@ -1,10 +1,10 @@
+
 import java.util.Set;
 
 import files.Files;
 import interactions.UserInteractions;
-// javac -d ../out ../src/*.java ../src/files/*.java ../src/interactions/*.java
 
-
+// javac -d ../out ../src/*.java ../src/files/*.java ../src/interactions/*.java ../src/logger/*.java
 public class Program {
     public static void main(String[] args) {
         Files files = new Files();
@@ -35,7 +35,7 @@ public class Program {
                 Set<String> allTextFiles = files.listAllUniqueFileNames("txt");
                 String fileName = interact.inputFile(allTextFiles);
                 System.out.println();
-                if (!fileName.equals("")) { //or else continue the main-loop
+                if (!fileName.equals("")) { // or else continue the main-loop
                     // File manipulation loop
                     while (true) {
                         printFileManipulationActions();
@@ -48,12 +48,10 @@ public class Program {
                             System.out.println("  " + fileName);
 
                         } else if (action == 2) {
-                            long size = files.size(fileName);
-                            System.out.println("  " + size + " bytes or " + (size / 1024.0) + " kilobytes");
+                            files.size(fileName, true);
 
                         } else if (action == 3) {
-                            long lines = files.amountOfLines(fileName);
-                            System.out.println("  " + lines + " lines");
+                            files.amountOfLines(fileName, true);
 
                         } else if (action == 4) {
                             String word = interact.input("Enter word: ");
@@ -67,8 +65,7 @@ public class Program {
                         } else if (action == 5) {
                             String word = interact.input("Enter word: ");
                             System.out.println();
-                            long count = files.countWord(word, fileName);
-                            System.out.println("The word " + word + " was " + count + " times in the file " + fileName);
+                            files.countWord(word, fileName, true);
                         }
                         interact.input("Press enter to continue");
                     }
