@@ -77,17 +77,31 @@ public class Files {
     }
 
     public Long size(String fileName) {
+        return size(fileName, false);
+    }
+
+    public Long size(String fileName, boolean print) {
+        long time = System.currentTimeMillis();
+        long fileSize = -1;
         try {
             File file = new File(folderPath + "/" + fileName);
-            return file.length();
+            fileSize = file.length();
         } catch (Exception e) {
             System.out.println("Failed to read a file");
             System.out.println("Path: " + folderPath + "/" + fileName);
         }
+        long totalTime = System.currentTimeMillis() - time;
+        String text = fileName + " has size of " + fileSize + " bytes or " + (fileSize / 1024.0) + " kilobytes.";
+        logOrLogAndPrint(text, totalTime, print);
         return -1L;
     }
 
     public Long amountOfLines(String fileName) {
+        return amountOfLines(fileName, false);
+    }
+
+    public Long amountOfLines(String fileName, boolean print) {
+        long time = System.currentTimeMillis();
         long lines = 0;
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(folderPath + "/" + fileName))) {
             while (bufferedReader.readLine() != null) {
@@ -99,6 +113,11 @@ public class Files {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+
+        String text = fileName + " contains " + lines + " lines";
+        long totalTime = System.currentTimeMillis() - time;
+        logOrLogAndPrint(text, totalTime, print);
+
         return lines;
     }
 
@@ -126,11 +145,7 @@ public class Files {
 
         String text = fileName + " contains word " + word + ": " + contains;
         long totalTime = System.currentTimeMillis() - time;
-        if (print) {
-            logger.logAndPrint(text, totalTime);
-        } else {
-            logger.log(text, totalTime);
-        }
+        logOrLogAndPrint(text, totalTime, print);
 
         return contains;
     }
@@ -159,14 +174,18 @@ public class Files {
         }
 
         String text = "The word " + word + " was " + count + " times in the file " + fileName + ".";
-        long totaltime = System.currentTimeMillis() - time;
-        if (print) {
-            logger.logAndPrint(text, totaltime);
-        } else {
-            logger.log(text, totaltime);
-        }
+        long totalTime = System.currentTimeMillis() - time;
+        logOrLogAndPrint(text, totalTime, print);
 
         return count;
+    }
+
+    private void logOrLogAndPrint(String text, long totalTime, boolean print) {
+        if (print) {
+            logger.logAndPrint(text, totalTime);
+        } else {
+            logger.log(text, totalTime);
+        }
     }
 
     private String getFileName(File file) {
