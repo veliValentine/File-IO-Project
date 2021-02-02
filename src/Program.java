@@ -1,14 +1,14 @@
 
 import java.util.Set;
 
-import files.Files;
+import fileReader.FileInformationReader;
 import interactions.UserInteractions;
 
-// javac -d ../out ../src/*.java ../src/files/*.java ../src/interactions/*.java ../src/logger/*.java
-// jar cfe File-IO-program.jar Program *.class files/*.class interactions/*.class logger/*.class
+// javac -d ../out ../src/*.java ../src/fileReader/*.java ../src/interactions/*.java ../src/logger/*.java
+// jar cfe File-IO-program.jar Program *.class fileReader/*.class interactions/*.class logger/*.class
 public class Program {
     public static void main(String[] args) {
-        Files files = new Files();
+        FileInformationReader files = new FileInformationReader();
         UserInteractions interact = new UserInteractions();
 
         printGreetings();

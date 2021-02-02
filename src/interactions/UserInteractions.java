@@ -12,7 +12,8 @@ public class UserInteractions {
     }
 
     public void close() {
-        scanner.close();;
+        scanner.close();
+        ;
     }
 
     //input without text

@@ -1,4 +1,4 @@
-package files;
+package fileReader;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -10,13 +10,13 @@ import java.util.Set;
 
 import logger.Logger;
 
-public class Files {
+public class FileInformationReader {
 
     private String folderPath;
     private Logger logger;
     private File[] files;
 
-    public Files(String folderPath) {
+    public FileInformationReader(String folderPath) {
         this.folderPath = folderPath;
         logger = new Logger(folderPath);
         try {
@@ -31,8 +31,8 @@ public class Files {
         }
     }
 
-    public Files() {
-        this("C:/Users/nicolas.valentine/Documents/Java/FileIOProject/src/resources");
+    public FileInformationReader() {
+        this("../src/resources");
     }
 
     public Set<String> listAllUniqueFileNames() {

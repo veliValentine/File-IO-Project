@@ -22,3 +22,4 @@
 22-1-2021T17:11:57: logger.txt has size of 2076 bytes or ~2 kilobytes. The function took 10ms to execute.
 22-1-2021T17:12:00: logger.txt contains 22 lines. The function took 4ms to execute.
 22-1-2021T17:12:06: logger.txt contains 23 lines. The function took 1ms to execute.
+2-2-2021T13:02:47: The word Dracula was 42 times in the file Dracula.txt. The function took 201ms to execute.
